@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление задачами</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1>Мои задачи</h1>
+    <form method="POST" action="{{ url_for('add_task') }}">
+        <input type="text" name="title" placeholder="Название задачи" required>
+        <textarea name="description" placeholder="Описание задачи"></textarea>
+        <input type="date" name="due_date" required>
+        <button type="submit">Добавить задачу</button>
+    </form>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            <strong>{{ task.title }}</strong> (до {{ task.due_date }})
+            <p>{{ task.description }}</p>
+            <a href="{{ url_for('edit_task', task_id=task.id) }}">Редактировать</a>
+            <a href="{{ url_for('delete_task', task_id=task.id) }}">Удалить</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
